@@ -15,4 +15,4 @@ RUN mvn clean package
 RUN useradd myuser
 USER myuser
 
-CMD java -jar target/rest-service-0.0.1-SNAPSHOT.jar
+# CMD java -jar target/rest-service-0.0.1-SNAPSHOT.jar
