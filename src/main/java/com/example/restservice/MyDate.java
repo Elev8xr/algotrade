@@ -68,6 +68,7 @@ public  class MyDate  {
         return finalDate;
 
     }
+    //template method should be replaced with method that validate all the date form
     public static Date ConvertCNBCStringToDate(String date) throws ParseException {
         String[] temp1 = date.split(",");
         String[] fullDate = temp1[1].split(" ");
@@ -78,6 +79,16 @@ public  class MyDate  {
             year += fullDate[3].charAt(i);
         String finalDate =month+"/"+day+"/"+year;
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM/dd/yyyy");
+        return simpleDateFormat.parse(finalDate);
+    }
+    //template method should be replaced with method that validate all the date form
+    public static Date ConvertMoneyWeekStringToDate(String date) throws ParseException {
+        String[] temp = date.split("-");
+        String day =temp[0];
+        String month = temp[1];
+        String year = temp[2];
+        String finalDate = month+"/"+day+"/"+year;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM/dd/yy");
         return simpleDateFormat.parse(finalDate);
     }
 }

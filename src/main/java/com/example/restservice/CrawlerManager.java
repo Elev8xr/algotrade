@@ -28,21 +28,39 @@ public class CrawlerManager {
      return  crawlerManager;
  }
 
+ public void LoadUpTheFilesNames(){
+        //this set should loadup the data(the csv files names ) form a text file or a csv file
+        //template
+        allCSVFiles.add("BusinessNews21.csv");
+        allCSVFiles.add("MoneyWeek1.csv");
+
+    }
 
 
- public void LoadUpDataFromArticlesFile() throws ParseException, IOException, CsvValidationException {
-     allArticles.clear();
-    MyCSVReader reader = new MyCSVReader("BusinessNews21.csv");
-    String[]Line = reader.ReadLine();
-    while (Line != null){
-        Line = reader.ReadLine();
-        if(Line!=null){
-            Article article  = new Article(null ,Line[0] ,Line[1] ,Line[4] ,MyDate.ConvertCNBCStringToDate(Line[2]),Line[3]);
-            allArticles.add(article);
 
+    public void LoadUpDataFromArticlesFile() throws ParseException, IOException, CsvValidationException {
+        allArticles.clear();
+        for (String path:allCSVFiles) {
+            MyCSVReader reader = new MyCSVReader(path);
+            String[]Line = reader.ReadLine();
+            Date date =new Date() ;
+            while (Line != null){
+                Line = reader.ReadLine();
+                if(Line!=null){
+                    if (path == "BusinessNews21.csv") // template need to change
+                        date = MyDate.ConvertCNBCStringToDate(Line[3]);
+                    else
+                        date = MyDate.ConvertMoneyWeekStringToDate(Line[3]);
+
+                    Article article  = new Article(Line[0] ,Line[1] ,Line[2] ,Line[5] ,date,Line[4]);
+
+                    allArticles.add(article);
+
+                }
+            }
         }
-     }
- }
+
+    }
 
 
  void sortArticlesByDate(){
@@ -84,6 +102,7 @@ Keyword findKeyword(String keyword ,String startDate ,String endDate) throws Par
      List<Article>articles = getAllArticlesBetweenTwoDates(startDate ,endDate);//get the articles between the start and end date
     Date date1 = MyDate.ConvertStringToDate(startDate);
     Date date2 = MyDate.ConvertStringToDate(endDate);
+    Set<String>websites = new HashSet<>();
 
      float  avgPerDay = 0;
      int numOfPosts = 0;
@@ -96,6 +115,7 @@ Keyword findKeyword(String keyword ,String startDate ,String endDate) throws Par
         }
         totalMentions += WordCounts.countOccurrences(article.description , keyword);
         totalMentions += WordCounts.countOccurrences(article.title , keyword);
+        websites.add(article.website);
     }
     avgPerDay = (float)totalMentions/(numOfDays+1);
 
@@ -103,7 +123,7 @@ Keyword findKeyword(String keyword ,String startDate ,String endDate) throws Par
      CSVWriter writer = new CSVWriter("Keywords.csv");
     // writer.WriteLine(keyword ,totalMentions, avgPerDay ,  numOfPosts , startDate ,endDate);
 
-     return new Keyword(keyword,totalMentions,avgPerDay,numOfPosts,date1,date2);
+     return new Keyword(websites,keyword,totalMentions,avgPerDay,numOfPosts,date1,date2);
 }
 
 }

@@ -10,7 +10,7 @@ a template for the Keyword Object
  */
 
 public class Keyword {
-
+    Set<String>websites;
     String word ;
     int totalMentions;
     double avgPerDay;
@@ -18,19 +18,42 @@ public class Keyword {
     Date startDate;
     Date endDate;
 
-    public Keyword(String word ,int totalMentions ,double avgPerDay ,int numOfPosts , Date startDate , Date endDate){
+    public Keyword(Set<String>websites,String word ,int totalMentions ,double avgPerDay ,int numOfPosts , Date startDate , Date endDate){
         this.word = word;
         this.totalMentions = totalMentions;
         this.avgPerDay = avgPerDay;
         this.numOfPosts = numOfPosts ;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.websites = websites;
 
     }
+    public Keyword(){
 
-   @Override
+    }
+    public String getWord(){
+        return word;
+    }
+    public double getAvgPerDay(){
+        return avgPerDay;
+    }
+    public int getTotalMentions(){
+        return totalMentions;
+    }
+    public Date getStartDate(){
+        return startDate;
+    }
+    public Date getEndDate(){
+        return endDate;
+    }
+    public Set<String> getWebsites(){
+        return websites;
+    }
+
+
+    /*@Override
     public String toString() {
         return String.format("{keyword:%s,totalMentions:%s,avgPerDay:%s,numOfArticles:%s,startDate:%s,endDate:%s}"
         ,word,totalMentions,avgPerDay,numOfPosts,startDate,endDate);
-    }
+    }*/
 }

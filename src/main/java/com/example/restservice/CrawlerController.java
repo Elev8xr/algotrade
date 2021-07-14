@@ -13,7 +13,7 @@ public class CrawlerController implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-
+        manager.LoadUpTheFilesNames();
        manager.LoadUpDataFromArticlesFile(); // load the articles
         manager.sortArticlesByDate();
 
