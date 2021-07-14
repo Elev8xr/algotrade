@@ -4,9 +4,10 @@ RUN apt update
 RUN apt install -y openjdk-8-jdk curl 
 ENV PATH=/usr/lib/jvm/java-1.8.0-openjdk-amd64/bin:$PATH
 WORKDIR /home
-RUN curl -o apache-maven-3.8.1-bin.tar.gz https://downloads.apache.org/maven/maven-3/3.8.1/binaries/apache-maven-3.8.1-bin.tar.gz
-RUN tar xzvf apache-maven-3.8.1-bin.tar.gz
-ENV PATH=/home/apache-maven-3.8.1/bin:$PATH
+#RUN curl -o apache-maven-3.8.1-bin.tar.gz https://downloads.apache.org/maven/maven-3/3.8.1/binaries/apache-maven-3.8.1-bin.tar.gz
+RUN curl -o apache-maven-3.6.2-bin.tar.gz https://archive.apache.org/dist/maven/maven-3/3.6.2/binaries/apache-maven-3.6.2-bin.tar.gz
+RUN tar xzvf apache-maven-3.6.2-bin.tar.gz
+ENV PATH=/home/apache-maven-3.6.2/bin:$PATH
 
 ADD ./ /home/Crawler
 WORKDIR /home/Crawler
